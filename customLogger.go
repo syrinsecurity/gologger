@@ -112,10 +112,12 @@ func (l *CustomLogger) Service() error {
 	}
 
 	var newFileName string
+	t := time.NewTicker(l.ConventionUpdate)
+	defer t.Stop()
 	for {
 		select {
 
-		case <-time.NewTicker(l.ConventionUpdate).C:
+		case <-t.C:
 
 			handle, newFileName, err = l.getFileHandle()
 			if err != nil {
